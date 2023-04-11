@@ -13,17 +13,20 @@ pipeline {
         // old docker delete
         stage('Delete old Docker') {
           agent any
+          options {
+                continueOnError true // 해당 stage에서 에러가 발생해도 다음 stage로 진행
+            }
           steps {
             echo 'Delete Old Docker'
             sh "docker stop ${imagename}"
             sh "docker rm ${imagename}"
             sh "docker rmi ${imagename}:${version}"
             }
-        //   post {
-        //     failure {
-        //       error 'This pipeline stops here...'
-        //     }
-        //   }
+          post {
+            failure {
+              error 'This pipeline is error... but continue...'
+            }
+          }
         }
 
         // docker build
