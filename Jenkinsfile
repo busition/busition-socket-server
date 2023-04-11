@@ -12,9 +12,12 @@ pipeline {
 
         // old docker delete
         stage('Delete old Docker') {
-          agent any
           options {
+<<<<<<< HEAD
                 continueOnError true
+=======
+                continueOnError true 
+>>>>>>> feature/CICD
             }
           steps {
             echo 'Delete Old Docker'
@@ -22,11 +25,7 @@ pipeline {
             sh "docker rm ${imagename}"
             sh "docker rmi ${imagename}:${version}"
             }
-          post {
-            failure {
-              error 'This pipeline is error... but continue...'
-            }
-          }
+
         }
 
         // docker build
