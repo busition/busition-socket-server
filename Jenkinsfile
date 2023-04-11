@@ -14,7 +14,7 @@ pipeline {
         stage('Delete old Docker') {
           agent any
           options {
-                continueOnError true // 해당 stage에서 에러가 발생해도 다음 stage로 진행
+                continueOnError true
             }
           steps {
             echo 'Delete Old Docker'
