@@ -19,11 +19,11 @@ pipeline {
             sh "docker rm ${imagename}"
             sh "docker rmi ${imagename}:${version}"
             }
-          post {
-            failure {
-              error 'This pipeline stops here...'
-            }
-          }
+        //   post {
+        //     failure {
+        //       error 'This pipeline stops here...'
+        //     }
+        //   }
         }
 
         // docker build
