@@ -12,8 +12,9 @@ pipeline {
 
         // old docker delete
         stage('Delete old Docker') {
-          options {
-                continueOnError true 
+
+        options {
+            continueOnError true
             }
           steps {
             echo 'Delete Old Docker'
