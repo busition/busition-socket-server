@@ -8,9 +8,11 @@ WORKDIR /busition_socket_server
 # 현재 Dockerfile 있는 경로의 모든 파일을 /busition_socket_server 에 복사
 ADD . /busition_socket_server
 
-RUN npm install --production
+# yarn 설치
+RUN npm install -g yarn --force
 
-RUN npm install pm2 -g
+RUN yarn
+RUN yarn global add pm2
 RUN pm2 install typescript
 
 #가상 머신에 오픈할 포트
