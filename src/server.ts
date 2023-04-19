@@ -48,6 +48,39 @@ busitionConsole.on("connection", (socket) => {
 // /driver로 열린 소켓
 busitionDirver.on("connection", (socket) => {
   console.log("here is driver namespace");
+  let state = false;
+  console.log("here is console namespace");
+  socket.onAny((eventName, ...args) => {
+    console.log("%s: ", eventName, args);
+  });
+  socket.on("send_id", (msg) => {
+    const { id } = msg;
+    state = true;
+    console.log(id);
+
+    /*
+    id를 통해서 알맞는 데이터를 선정
+    */
+    const send_data = setInterval(() => {
+      socket.emit("data", dummmy_data);
+      if (!state) {
+        clearInterval(send_data);
+      }
+    }, 1000);
+  });
+  socket.on(
+    "send_location",
+    (location: { latitude: number; longitude: number }) => {
+      console.log(location);
+      dummmy_data.location = [location.latitude, location.longitude];
+    }
+  );
+  socket.on("send_user", (uuid: { uuid: string }) => {
+    console.log(uuid);
+  });
+  socket.on("disconnecting", () => {
+    state = false;
+  });
 });
 
 // /mate로 열린 소켓
