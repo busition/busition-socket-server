@@ -9,7 +9,8 @@ const io = new Server(server, {
   cors: {
     origin: ["https://admin.socket.io"],
     credentials: true
-  }
+  },
+  transports: ["websocket"],
 });
 
 // dummy data
@@ -126,7 +127,7 @@ instrument(io, {
   auth: {
     type: "basic",
     username: "admin",
-    password: "$2a$10$qWN96KxB944iiK1mnAl4WeLOdewMKuv3lFUnScsnoPxIEAPgcA3KK" // "changeit" encrypted with bcrypt
+    password: "$2a$10$qWN96KxB944iiK1mnAl4WeLOdewMKuv3lFUnScsnoPxIEAPgcA3KK" 
   },
 });
 
