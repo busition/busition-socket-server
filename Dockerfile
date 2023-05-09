@@ -11,9 +11,9 @@ ADD . /busition_socket_server
 # yarn 설치
 RUN npm install -g yarn --force
 
-RUN yarn
-RUN yarn global add pm2
-RUN pm2 install typescript
+# RUN yarn
+# RUN yarn global add pm2
+# RUN pm2 install typescript
 
 #가상 머신에 오픈할 포트
 EXPOSE 3000
