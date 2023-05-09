@@ -21,4 +21,5 @@ EXPOSE 3000
 #컨테이너에서 실행될 명령을 지정
 # CMD [ "npm", "start" ]
 # CMD [ "forever", "start", "-c", "npm start", "." ]
-CMD ["pm2-runtime", "start", "ecosystem.config.js", "--watch", "--env", "production"]
+# CMD ["pm2-runtime", "start", "ecosystem.config.js", "--watch", "--env", "production"]
+CMD ["pm2", "start", "server.ts", "-i 0"]
