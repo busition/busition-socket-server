@@ -22,4 +22,4 @@ EXPOSE 3000
 # CMD [ "npm", "start" ]
 # CMD [ "forever", "start", "-c", "npm start", "." ]
 # CMD ["pm2-runtime", "start", "ecosystem.config.js", "--watch", "--env", "production"]
-CMD ["pm2", "start", "server.ts", "-i 0"]
+CMD ["pm2-runtime", "server.ts"]
