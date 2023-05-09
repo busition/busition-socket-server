@@ -3,6 +3,7 @@ import http from "http";
 import { Server, Socket } from "socket.io";
 import {instrument} from "@socket.io/admin-ui"
 
+
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -10,7 +11,7 @@ const io = new Server(server, {
     origin: ["https://admin.socket.io"],
     credentials: true
   },
-  transports: ["websocket"],
+  
 });
 
 // dummy data
