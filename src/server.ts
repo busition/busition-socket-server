@@ -1,18 +1,22 @@
 import express from "express";
 import http from "http";
 import { Server, Socket } from "socket.io";
-import {instrument} from "@socket.io/admin-ui"
+import { instrument } from "@socket.io/admin-ui";
 
-
+const { createAdapter } = require("@socket.io/cluster-adapter");
+const { setupWorker } = require("@socket.io/sticky");
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: ["https://admin.socket.io"],
-    credentials: true
+    credentials: true,
   },
-  
 });
+
+io.adapter(createAdapter());
+
+setupWorker(io);
 
 // dummy data
 const dummmy_data = { location: [36.611, 126.979], delayed: 330 };
@@ -68,30 +72,29 @@ busitionUser.on("connection", (socket) => {
     const room = busitionUser.adapter.rooms.get(room_id);
 
     if (room) {
-      console.log('busition Driver ${room_id} exists.');
+      console.log("busition Driver ${room_id} exists.");
       socket.join(room_id);
-    console.log(`Socket ${socket.id} joined room '${room_id}'`);
-    state  = true;
+      console.log(`Socket ${socket.id} joined room '${room_id}'`);
+      state = true;
 
-    const send_data = setInterval(() => {
-      busitionUser.to(room_id).emit("data", dummmy_data);
-      if (!state) {
-        clearInterval(send_data);
-      }
-    }, 1000);
+      const send_data = setInterval(() => {
+        busitionUser.to(room_id).emit("data", dummmy_data);
+        if (!state) {
+          clearInterval(send_data);
+        }
+      }, 1000);
     } else {
       console.log(`busition Driver ${room_id} does not exist.`);
     }
-    
   });
-  
+
   socket.on("open_room", (msg) => {
     const route_id = msg;
     state = true;
     console.log(route_id);
     socket.join(route_id);
     console.log(`Socket ${socket.id} created room '${route_id}'`);
-    
+
     /*
     id를 통해서 알맞는 데이터를 선정
     */
@@ -120,7 +123,6 @@ busitionUser.on("connection", (socket) => {
 // /mate로 열린 소켓
 busitionMate.on("connection", (socket) => {
   console.log("here is mate namespace");
-  
 });
 const PORT = process.env.PORT || 3000;
 
@@ -128,7 +130,7 @@ instrument(io, {
   auth: {
     type: "basic",
     username: "admin",
-    password: "$2a$10$qWN96KxB944iiK1mnAl4WeLOdewMKuv3lFUnScsnoPxIEAPgcA3KK" 
+    password: "$2a$10$qWN96KxB944iiK1mnAl4WeLOdewMKuv3lFUnScsnoPxIEAPgcA3KK",
   },
 });
 
