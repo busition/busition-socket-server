@@ -3,6 +3,8 @@ import http from "http";
 import { Server, Socket } from "socket.io";
 import { instrument } from "@socket.io/admin-ui";
 
+const { createAdapter } = require("@socket.io/cluster-adapter");
+const { setupWorker } = require("@socket.io/sticky");
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -12,7 +14,9 @@ const io = new Server(server, {
   },
 });
 
+io.adapter(createAdapter());
 
+setupWorker(io);
 
 // dummy data
 const dummmy_data = { location: [36.611, 126.979], delayed: 330 };
