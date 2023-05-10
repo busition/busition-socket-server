@@ -9,21 +9,21 @@ pipeline {
     }
 
     stages {
-        // old docker delete
-        stage('Delete old Docker') {
-          agent any
-          steps {
-            echo 'Delete Old Docker'
-            sh "docker stop ${imagename}"
-            sh "docker rm ${imagename}"
-            sh "docker rmi ${imagename}:${version}"
-            }
-          post {
-            failure {
-              error 'This pipeline stops here...'
-            }
-          }
-        }
+        // // old docker delete
+        // stage('Delete old Docker') {
+        //   agent any
+        //   steps {
+        //     echo 'Delete Old Docker'
+        //     sh "docker stop ${imagename}"
+        //     sh "docker rm ${imagename}"
+        //     sh "docker rmi ${imagename}:${version}"
+        //     }
+        //   post {
+        //     failure {
+        //       error 'This pipeline stops here...'
+        //     }
+        //   }
+        // }
 
         // docker build
         stage('Bulid Docker') {
