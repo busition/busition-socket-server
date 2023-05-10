@@ -9,10 +9,12 @@ WORKDIR /busition_socket_server
 ADD . /busition_socket_server
 
 RUN npm install
-RUN npm install -g @socket.io/pm2
-RUN npm install -g typescript
+RUN npm install -D @socket.io/pm2
+RUN npm install -D typescript
 RUN pm2 install typescript
+
 # RUN yarn global add pm2
+# RUN pm2 install typescript
 
 #가상 머신에 오픈할 포트
 EXPOSE 3000
