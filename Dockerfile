@@ -8,9 +8,10 @@ WORKDIR /busition_socket_server
 # 현재 Dockerfile 있는 경로의 모든 파일을 /busition_socket_server 에 복사
 ADD . /busition_socket_server
 
-# yarn 설치
-RUN npm install -g yarn --force
 
+RUN npm install -g @socket.io/pm2
+RUN npm install -g typescript
+RUN pm2 install typescript
 # RUN yarn
 # RUN yarn global add pm2
 # RUN pm2 install typescript
@@ -22,4 +23,4 @@ EXPOSE 3000
 # CMD [ "npm", "start" ]
 # CMD [ "forever", "start", "-c", "npm start", "." ]
 # CMD ["pm2-runtime", "start", "ecosystem.config.js", "--watch", "--env", "production"]
-CMD ["pm2-runtime", "server.ts"]
+CMD ["pm2", "start", "ecosystem.config.js", "--watch", "--env", "production"]
