@@ -12,6 +12,9 @@ RUN yarn
 RUN npm install -g @socket.io/pm2
 RUN npm install -g typescript
 RUN pm2 install typescript
+
+RUN npx pm2 install typescript 
+
 # RUN yarn global add pm2
 # RUN pm2 install typescript
 
@@ -22,4 +25,6 @@ EXPOSE 3000
 # CMD [ "npm", "start" ]
 # CMD [ "forever", "start", "-c", "npm start", "." ]
 # CMD ["pm2-runtime", "start", "ecosystem.config.js", "--watch", "--env", "production"]
-CMD ["pm2", "start", "ecosystem.config.js", "--watch", "--env", "production"]
+
+CMD ["pm2-runtime", "start", "ecosystem.config.js", "--watch", "--env", "production","--interpreter=ts-node"]
+
