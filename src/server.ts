@@ -14,9 +14,9 @@ const io = new Server(server, {
   },
 });
 
-io.adapter(createAdapter());
+// io.adapter(createAdapter());
 
-setupWorker(io);
+// setupWorker(io);
 
 // dummy data
 const dummmy_data = { location: [36.611, 126.979], delayed: 330 };
