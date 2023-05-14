@@ -13,7 +13,9 @@ const io = new Server(server, {
     credentials: true,
   },
 });
-
+io.on("connect_error", (err) => {
+  console.log(`connect_error due to ${err.message}`);
+});
 // dummy data
 const dummmy_data = { location: [36.611, 126.979], delayed: 330 };
 
