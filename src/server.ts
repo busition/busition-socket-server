@@ -127,6 +127,8 @@ busitionMate.on("connection", (socket) => {
 const PORT = process.env.PORT || 3000;
 
 instrument(io, {
+  namespaceName: "/admin",
+  readonly: false,
   auth: {
     type: "basic",
     username: "admin",
