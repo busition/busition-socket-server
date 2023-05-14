@@ -14,10 +14,6 @@ const io = new Server(server, {
   },
 });
 
-// io.adapter(createAdapter());
-
-// setupWorker(io);
-
 // dummy data
 const dummmy_data = { location: [36.611, 126.979], delayed: 330 };
 
@@ -129,13 +125,16 @@ const PORT = process.env.PORT || 3000;
 instrument(io, {
   namespaceName: "/admin",
   readonly: false,
-  auth: {
-    type: "basic",
-    username: "admin",
-    password: "$2a$10$qWN96KxB944iiK1mnAl4WeLOdewMKuv3lFUnScsnoPxIEAPgcA3KK",
-  },
+  // auth: {
+  //   type: "basic",
+  //   username: "admin",
+  //   password: "$2a$10$qWN96KxB944iiK1mnAl4WeLOdewMKuv3lFUnScsnoPxIEAPgcA3KK",
+  // },
+  auth: false,
 });
+io.adapter(createAdapter());
 
+setupWorker(io);
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
