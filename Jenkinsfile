@@ -13,14 +13,17 @@ pipeline {
         stage('Delete old Docker') {
           agent any
           steps {
-            try{
-              echo 'Delete Old Docker'
-              sh "docker stop ${imagename}"
-              sh "docker rm ${imagename}"
-              sh "docker rmi ${imagename}:${version}"
+            script{
+              try{
+                echo 'Delete Old Docker'
+                sh "docker stop ${imagename}"
+                sh "docker rm ${imagename}"
+                sh "docker rmi ${imagename}:${version}"
             } catch (e){
               sh 'echo no old docker'
             }
+            }
+           
             
             }
         }
