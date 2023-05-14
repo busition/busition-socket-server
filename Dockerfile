@@ -27,5 +27,5 @@ EXPOSE 3000
 # CMD ["pm2-runtime", "start", "ecosystem.config.js", "--watch", "--env", "production"]
 
 
-CMD ["pm2-runtime", "start", "ecosystem.config.js", "--watch", "--env", "production","--interpreter=ts-node"]
+CMD ["pm2-runtime", "start", "ecosystem.config.js", "--watch", "--env","--interpreter=","ts-node", "production"]
 
