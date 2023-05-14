@@ -9,7 +9,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["https://admin.socket.io", "http://api.dev.busition.com"],
+    origin: ["https://admin.socket.io", "https://api.dev.busition.com"],
     credentials: true,
   },
 });
@@ -125,12 +125,11 @@ busitionMate.on("connection", (socket) => {
 const PORT = process.env.PORT || 3000;
 
 instrument(io, {
-  // auth: {
-  //   type: "basic",
-  //   username: "admin",
-  //   password: "$2a$10$qWN96KxB944iiK1mnAl4WeLOdewMKuv3lFUnScsnoPxIEAPgcA3KK",
-  // },
-  auth: false,
+  auth: {
+    type: "basic",
+    username: "admin",
+    password: "$2a$10$qWN96KxB944iiK1mnAl4WeLOdewMKuv3lFUnScsnoPxIEAPgcA3KK",
+  },
 });
 io.adapter(createAdapter());
 
