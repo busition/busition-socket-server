@@ -2,6 +2,8 @@ import express from "express";
 import http from "http";
 import { Server, Socket } from "socket.io";
 import { instrument } from "@socket.io/admin-ui";
+import { createClient } from "redis";
+import { Emitter } from "@socket.io/redis-emitter";
 
 const { createAdapter } = require("@socket.io/cluster-adapter");
 const { setupWorker } = require("@socket.io/sticky");
@@ -23,6 +25,9 @@ const dummmy_data = { location: [36.611, 126.979], delayed: 330 };
 const busitionConsole = io.of("/console");
 const busitionUser = io.of("/user");
 const busitionMate = io.of("/mate");
+
+//redis adapter
+const redisClient = createClient({ url: "redis://localhost:6379" });
 
 app.get("/", (req, res) => {
   const rooms = Array.from(busitionUser.adapter.rooms);
@@ -103,6 +108,16 @@ busitionUser.on("connection", (socket) => {
       }
     }, 1000);
   });
+
+  socket.on("check_passenger", (msg) => {
+    const passenger_list = JSON.parse(msg);
+    console.log(passenger_list);
+    passenger_list.forEach((passenger: { uuid: string; route_id: string }) => {
+      const { uuid, route_id } = passenger;
+      redisHash(uuid, route_id);
+    });
+  });
+
   socket.on(
     "send_location",
     (location: { latitude: number; longitude: number }) => {
@@ -137,3 +152,12 @@ setupWorker(io);
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
+//function
+
+async function redisHash(uuid: string, route_id: string) {
+  const redis = require("redis");
+  const redisClient = redis.createClient();
+
+  redisClient.hSet(route_id, uuid, "false");
+}
