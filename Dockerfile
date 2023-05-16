@@ -9,10 +9,8 @@ WORKDIR /busition_socket_server
 ADD . /busition_socket_server
 
 RUN npm install
-RUN npm install -D -g @socket.io/pm2
-RUN npm install -D -g typescript
-RUN pm2 install typescript
-RUN npx pm2 install typescript 
+RUN npm install -g @socket.io/pm2
+RUN npm install -D @socket.io/pm2
 
 
 # RUN yarn global add pm2
@@ -27,5 +25,5 @@ EXPOSE 3000
 # CMD ["pm2-runtime", "start", "ecosystem.config.js", "--watch", "--env", "production"]
 
 
-CMD ["pm2-runtime", "start", "ecosystem.config.js", "--watch", "--env", "production"]
+CMD ["pm2-runtime", "start", "ecosystem.config.cjs", "--watch", "--env", "production"]
 
