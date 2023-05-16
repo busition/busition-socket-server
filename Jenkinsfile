@@ -49,7 +49,7 @@ pipeline {
           agent any
           steps {
             echo 'Run Docker '
-            sh "docker run -d --name ${imagename} -p 3000:3000 --restart=unless-stopped ${imagename}:${version}"
+            sh "docker run -d --name ${imagename} -p 3000:3000 --restart=unless-stopped ${imagename}:${version} -v /socket_server_data:/env"
           }
           post {
             failure {

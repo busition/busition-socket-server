@@ -1,12 +1,14 @@
+import dotenv from "dotenv";
+dotenv.config({ path: "/env/.env" });
+console.log(process.env.REDIS);
+
 import express from "express";
 import http from "http";
 import { Server, Socket } from "socket.io";
 import { instrument } from "@socket.io/admin-ui";
-import { createClient } from "redis";
-import { Emitter } from "@socket.io/redis-emitter";
+import { createAdapter } from "@socket.io/cluster-adapter";
+import { setupWorker } from "@socket.io/sticky";
 
-const { createAdapter } = require("@socket.io/cluster-adapter");
-const { setupWorker } = require("@socket.io/sticky");
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -15,6 +17,7 @@ const io = new Server(server, {
     credentials: true,
   },
 });
+
 io.on("connect_error", (err) => {
   console.log(`connect_error due to ${err.message}`);
 });
@@ -26,8 +29,16 @@ const busitionConsole = io.of("/console");
 const busitionUser = io.of("/user");
 const busitionMate = io.of("/mate");
 
-//redis adapter
-const redisClient = createClient({ url: "redis://localhost:6379" });
+//redis
+import { createClient } from "redis";
+
+const client = createClient({
+  url: process.env.REDIS || "redis://localhost:6379",
+});
+
+client.on("error", (err) => console.log("Redis Client Error", err));
+
+await client.connect();
 
 app.get("/", (req, res) => {
   const rooms = Array.from(busitionUser.adapter.rooms);
@@ -109,24 +120,23 @@ busitionUser.on("connection", (socket) => {
     }, 1000);
   });
 
-  socket.on("check_passenger", (msg) => {
-    const passenger_list = JSON.parse(msg);
+  socket.on("check_passenger", async (msg) => {
+    const passenger_list = await JSON.parse(msg);
     console.log(passenger_list);
-    passenger_list.forEach((passenger: { uuid: string; route_id: string }) => {
-      const { uuid, route_id } = passenger;
-      redisHash(uuid, route_id);
-    });
+    redisHash(passenger_list);
   });
 
-  socket.on(
-    "send_location",
-    (location: { latitude: number; longitude: number }) => {
-      console.log(location);
-      dummmy_data.location = [location.latitude, location.longitude];
-    }
-  );
-  socket.on("send_user", (uuid: { uuid: string }) => {
+  socket.on("send_location", (location) => {
+    console.log(location);
+    dummmy_data.location = [location.latitude, location.longitude];
+  });
+  socket.on("send_user", (uuid) => {
     console.log(uuid);
+  });
+  socket.on("check", async (uuid) => {
+    console.log(uuid);
+    const tmp = await client.hGet("test", uuid);
+    console.log(tmp);
   });
   socket.on("disconnecting", () => {
     state = false;
@@ -155,9 +165,9 @@ server.listen(PORT, () => {
 
 //function
 
-async function redisHash(uuid: string, route_id: string) {
-  const redis = require("redis");
-  const redisClient = redis.createClient();
-
-  redisClient.hSet(route_id, uuid, "false");
+async function redisHash(passenger_list) {
+  passenger_list.forEach(async (passenger) => {
+    const { uuid, id } = passenger;
+    await client.HSET("test", uuid, "false");
+  });
 }
