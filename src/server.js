@@ -138,6 +138,11 @@ busitionUser.on("connection", (socket) => {
     const tmp = await client.hGet("test", uuid);
     console.log(tmp);
   });
+  socket.on("del", async (uuid) => {
+    console.log(uuid);
+    const tmp = await client.del("test");
+    console.log(tmp);
+  });
   socket.on("disconnecting", () => {
     state = false;
   });
