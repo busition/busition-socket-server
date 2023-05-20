@@ -52,21 +52,21 @@ busitionConsole.on("connection", (socket) => {
   socket.onAny((eventName, ...args) => {
     console.log("%s: ", eventName, args);
   });
-  socket.on("send_id", (msg) => {
-    const { id } = msg;
-    state = true;
-    console.log(state);
+  // socket.on("send_id", (msg) => {
+  //   const { id } = msg;
+  //   state = true;
+  //   console.log(state);
 
-    /*
-    id를 통해서 알맞는 데이터를 선정
-    */
-    const send_data = setInterval(() => {
-      socket.emit("data", dummmy_data);
-      if (!state) {
-        clearInterval(send_data);
-      }
-    }, 1000);
-  });
+  //   /*
+  //   id를 통해서 알맞는 데이터를 선정
+  //   */
+  //   const send_data = setInterval(() => {
+  //     socket.emit("data", dummmy_data);
+  //     if (!state) {
+  //       clearInterval(send_data);
+  //     }
+  //   }, 1000);
+  // });
   socket.on("disconnecting", () => {
     state = false;
   });
@@ -126,9 +126,11 @@ busitionUser.on("connection", (socket) => {
     redisHash(passenger_list);
   });
 
-  socket.on("send_location", (location) => {
+  socket.on("send_location", async (location) => {
     console.log(location);
-    dummmy_data.location = [location.latitude, location.longitude];
+    const location_list = await JSON.parse(location);
+    const [latitude, longitude] = location_list;
+    dummmy_data.location = [latitude, longitude];
   });
   socket.on("send_user", (uuid) => {
     console.log(uuid);
