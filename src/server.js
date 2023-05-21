@@ -22,7 +22,7 @@ io.on("connect_error", (err) => {
   console.log(`connect_error due to ${err.message}`);
 });
 // dummy data
-const dummmy_data = { location: [36.611, 126.979], delayed: 330 };
+const dummmy_data = { location: [36.611, 126.979], delayed: 330, speed: 0 };
 
 // namespace 정의, 우리 서비스 별로
 const busitionConsole = io.of("/console");
@@ -102,6 +102,18 @@ busitionUser.on("connection", (socket) => {
     }
   });
 
+  // socket.on("close_room", (room_id) => {
+  //   const room = busitionUser.adapter.rooms.get(room_id);
+  //   if (room) {
+  //     console.log("busition Driver ${room_id} exists.");
+  //     socket.leave(room_id);
+  //     console.log(`Socket ${socket.id} left room '${room_id}'`);
+  //     state = false;
+  //   } else {
+  //     console.log(`busition Driver ${room_id} does not exist.`);
+  //   }
+  // });
+
   socket.on("open_room", (msg) => {
     const route_id = msg;
     state = true;
@@ -129,8 +141,9 @@ busitionUser.on("connection", (socket) => {
   socket.on("send_location", async (location) => {
     console.log(location);
     const location_list = await JSON.parse(location);
-    const [latitude, longitude] = location_list;
+    const [latitude, longitude, speed] = location_list;
     dummmy_data.location = [latitude, longitude];
+    dummmy_data.speed = speed;
   });
   socket.on("send_user", (uuid) => {
     console.log(uuid);
@@ -175,6 +188,6 @@ server.listen(PORT, () => {
 async function redisHash(passenger_list) {
   passenger_list.forEach(async (passenger) => {
     const { uuid, id } = passenger;
-    await client.HSET("test", uuid, "false");
+    await client.HSET(id, uuid, "false");
   });
 }
