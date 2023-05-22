@@ -9,8 +9,9 @@ import { instrument } from "@socket.io/admin-ui";
 import { createAdapter } from "@socket.io/cluster-adapter";
 import { setupWorker } from "@socket.io/sticky";
 
-const AWS = require("aws-sdk");
+import AWS from "aws-sdk";
 
+const AWS = AWS();
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
