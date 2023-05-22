@@ -81,23 +81,11 @@ busitionConsole.on("connection", (socket) => {
 });
 busitionConsole.on("test", (uuid) => {
   const dynamoDB = new AWS.DynamoDB();
-  console.log("test");
-  const params = {
-    TableName: "schedules_v2",
-    KeyConditionExpression: "id = :console_admin_uid",
-    ExpressionAttributeValues: {
-      ":id": { S: uuid },
-    },
-  };
-
-  dynamoDB.query(params, (err, data) => {
-    if (err) {
-      console.error("Error:", err);
-    } else {
-      busitionConsole.to(socket.id).emit("data", data.Items);
-      console.log("Data retrieved successfully:", data.Items);
-    }
+  dynamoDB.listTables({}, (err, data) => {
+    if (err) console.log(err, err.stack);
+    else console.log(data);
   });
+  console.log("test");
 });
 
 // /user 열린 소켓
