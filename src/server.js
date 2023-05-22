@@ -74,12 +74,12 @@ busitionConsole.on("connection", (socket) => {
 
 // /user 열린 소켓
 busitionUser.on("connection", (socket) => {
-  console.log("here is driver namespace");
+  console.log("here is user namespace");
   let state = false;
-  console.log("here is console namespace");
-  socket.onAny((eventName, ...args) => {
-    console.log("%s: ", eventName, args);
-  });
+  // console.log("here is console namespace");
+  // socket.onAny((eventName, ...args) => {
+  //   console.log("%s: ", eventName, args);
+  // });
 
   // room_id를 통해서 방에 들어가기 방이 없으면 못드감
   socket.on("join_room", (room_id) => {
@@ -144,7 +144,6 @@ busitionUser.on("connection", (socket) => {
   socket.on("send_location", async (location) => {
     console.log(location);
     const location_list = await JSON.parse(location);
-
     dummmy_data.location = [location_list.latitude, location_list.longitude];
     dummmy_data.speed = location_list.speed;
   });
