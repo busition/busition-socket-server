@@ -76,7 +76,7 @@ busitionConsole.on("connection", (socket) => {
 });
 busitionConsole.on("test", (uuid) => {
   const re = process.env.REGION;
-  const client = new DynamoDBClient({ re });
+  const client = new DynamoDBClient({});
 
   const tt = async () => {
     const command = new ListTablesCommand({});
