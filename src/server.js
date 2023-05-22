@@ -22,8 +22,10 @@ import { DynamoDB } from "@aws-sdk/client-dynamodb";
 
 const dynamoDB = new DynamoDB({
   region: process.env.REGION,
-  accessKeyId: process.env.KEY,
-  secretAccessKey: process.env.SECRET_KEY,
+  credentials: {
+    accessKeyId: process.env.KEY,
+    secretAccessKey: process.env.SECRET_KEY,
+  },
 });
 
 io.on("connect_error", (err) => {
@@ -39,8 +41,7 @@ const busitionMate = io.of("/mate");
 
 //redis
 import { createClient } from "redis";
-const AWS_ACCESS_KEY_ID = process.env.KEY;
-const AWS_SECRET_ACCESS_KEY = process.env.SECRET_KEY;
+
 const client = createClient({
   url: process.env.REDIS || "redis://localhost:6379",
 });
