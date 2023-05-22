@@ -78,12 +78,12 @@ busitionConsole.on("connection", (socket) => {
     console.log(uuid);
     console.log("test");
     const re = process.env.REGION;
-    const client = new DynamoDBClient({});
-
+    const c = new DynamoDBClient({});
+    console.log(c);
     const tt = async () => {
       const command = new ListTablesCommand({});
 
-      const response = await client.send(command);
+      const response = await c.send(command);
       console.log(response.TableNames.join("\n"));
       return response;
     };
