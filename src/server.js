@@ -75,6 +75,8 @@ busitionConsole.on("connection", (socket) => {
   });
 
   socket.on("test", (uuid) => {
+    console.log(uuid);
+    console.log("test");
     const re = process.env.REGION;
     const client = new DynamoDBClient({});
 
