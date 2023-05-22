@@ -99,8 +99,7 @@ busitionUser.on("connection", (socket) => {
       }, 1000);
     } else {
       busitionUser.to(socket.id).emit("code", 404);
-
-      console.log(`busition Driver ${room_id} does not exist.`);
+      console.log(`busition room ${room_id} not open`);
     }
   });
 
@@ -117,11 +116,11 @@ busitionUser.on("connection", (socket) => {
   // });
 
   socket.on("open_room", (msg) => {
-    const route_id = msg;
+    const { route_id, type } = msg;
     state = true;
-    console.log(route_id);
-    socket.join(route_id);
-    console.log(`Socket ${socket.id} created room '${route_id}'`);
+    console.log(route_id + "?" + type);
+    socket.join(route_id + "?" + type);
+    console.log(`Socket ${socket.id} created room '${route_id + "?" + type}'`);
 
     /*
     id를 통해서 알맞는 데이터를 선정
