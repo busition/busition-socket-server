@@ -57,9 +57,9 @@ app.get("/", (req, res) => {
 busitionConsole.on("connection", (socket) => {
   let state = false;
   console.log("here is console namespace");
-  socket.onAny((eventName, ...args) => {
-    console.log("%s: ", eventName, args);
-  });
+  // socket.onAny((eventName, ...args) => {
+  //   console.log("%s: ", eventName, args);
+  // });
   // socket.on("send_id", (msg) => {
   //   const { id } = msg;
   //   state = true;
