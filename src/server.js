@@ -73,18 +73,19 @@ busitionConsole.on("connection", (socket) => {
   socket.on("disconnecting", () => {
     state = false;
   });
-});
-busitionConsole.on("test", (uuid) => {
-  const re = process.env.REGION;
-  const client = new DynamoDBClient({});
 
-  const tt = async () => {
-    const command = new ListTablesCommand({});
+  socket.on("test", (uuid) => {
+    const re = process.env.REGION;
+    const client = new DynamoDBClient({});
 
-    const response = await client.send(command);
-    console.log(response.TableNames.join("\n"));
-    return response;
-  };
+    const tt = async () => {
+      const command = new ListTablesCommand({});
+
+      const response = await client.send(command);
+      console.log(response.TableNames.join("\n"));
+      return response;
+    };
+  });
 });
 
 // /user 열린 소켓
