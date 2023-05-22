@@ -128,7 +128,7 @@ busitionUser.on("connection", (socket) => {
     id를 통해서 알맞는 데이터를 선정
     */
     const send_data = setInterval(() => {
-      busitionUser.to(route_id).emit("data", dummmy_data);
+      busitionUser.to(route).emit("data", dummmy_data);
       if (!state) {
         clearInterval(send_data);
       }
