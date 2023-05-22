@@ -8,6 +8,8 @@ import { Server, Socket } from "socket.io";
 import { instrument } from "@socket.io/admin-ui";
 import { createAdapter } from "@socket.io/cluster-adapter";
 import { setupWorker } from "@socket.io/sticky";
+import AWS from "aws-sdk";
+const dynamoDB = new AWS.DynamoDB();
 
 const app = express();
 const server = http.createServer(app);
@@ -90,7 +92,7 @@ busitionUser.on("connection", (socket) => {
       socket.join(room_id);
       console.log(`Socket ${socket.id} joined room '${room_id}'`);
       state = true;
-
+      busitionUser.to(room_id).emit("code", 200);
       const send_data = setInterval(() => {
         busitionUser.to(room_id).emit("data", dummmy_data);
         if (!state) {
@@ -98,6 +100,8 @@ busitionUser.on("connection", (socket) => {
         }
       }, 1000);
     } else {
+      busitionUser.to(room_id).emit("code", 404);
+
       console.log(`busition Driver ${room_id} does not exist.`);
     }
   });
@@ -190,4 +194,18 @@ async function redisHash(passenger_list) {
     const { uuid, id } = passenger;
     await client.HSET(id, uuid, "false");
   });
+}
+
+function distance(lat1, lon1, lat2, lon2) {
+  var R = 6371; // 지구 반지름(km)
+  var dLat = Math.toRadians(lat2 - lat1);
+  var dLon = Math.toRadians(lon2 - lon1);
+  var a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(Math.toRadians(lat1)) *
+      Math.cos(Math.toRadians(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
 }
