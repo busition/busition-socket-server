@@ -21,9 +21,9 @@ const io = new Server(server, {
 import { DynamoDB } from "@aws-sdk/client-dynamodb";
 
 const dynamoDB = new DynamoDB({
-  region: "us-east-1",
-  accessKeyId: "YOUR_ACCESS_KEY_ID",
-  secretAccessKey: "YOUR_SECRET_ACCESS_KEY",
+  region: process.env.REGION,
+  accessKeyId: process.env.KEY,
+  secretAccessKey: process.env.SECRET_KEY,
 });
 
 io.on("connect_error", (err) => {
