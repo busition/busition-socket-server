@@ -8,8 +8,6 @@ import { Server, Socket } from "socket.io";
 import { instrument } from "@socket.io/admin-ui";
 import { createAdapter } from "@socket.io/cluster-adapter";
 import { setupWorker } from "@socket.io/sticky";
-import AWS from "aws-sdk";
-const dynamoDB = new AWS.DynamoDB();
 
 const app = express();
 const server = http.createServer(app);
