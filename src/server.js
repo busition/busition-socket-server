@@ -83,17 +83,18 @@ busitionConsole.on("connection", (socket) => {
   socket.on("test", (uuid) => {
     console.log(uuid);
     console.log("test");
-    const params = {
-      TableName: "my-table",
-    };
+    console.log(dynamoDB);
+    // const params = {
+    //   TableName: "my-table",
+    // };
 
-    dynamoDB.scan(params, async (err, data) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(data);
-      }
-    });
+    // dynamoDB.scan(params, async (err, data) => {
+    //   if (err) {
+    //     console.log(err);
+    //   } else {
+    //     console.log(data);
+    //   }
+    // });
   });
 });
 
