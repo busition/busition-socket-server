@@ -144,9 +144,9 @@ busitionUser.on("connection", (socket) => {
   socket.on("send_location", async (location) => {
     console.log(location);
     const location_list = await JSON.parse(location);
-    const [latitude, longitude, speed] = location_list;
-    dummmy_data.location = [latitude, longitude];
-    dummmy_data.speed = speed;
+
+    dummmy_data.location = [location_list.latitude, location_list.longitude];
+    dummmy_data.speed = location_list.speed;
   });
   socket.on("send_user", (uuid) => {
     console.log(uuid);
