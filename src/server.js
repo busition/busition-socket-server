@@ -21,7 +21,7 @@ const io = new Server(server, {
   },
 });
 
-AWS.config.update({
+await AWS.config.update({
   region: process.env.REGION,
   accessKeyId: process.env.KEY,
   secretAccessKey: process.env.SECRET_KEY,
@@ -81,6 +81,7 @@ busitionConsole.on("connection", (socket) => {
   });
 });
 busitionConsole.on("test", (uuid) => {
+  const dynamoDB = new AWS.DynamoDB();
   console.log("test");
   const params = {
     TableName: "schedules_v2",
