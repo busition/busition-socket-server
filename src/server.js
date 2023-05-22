@@ -9,6 +9,8 @@ import { instrument } from "@socket.io/admin-ui";
 import { createAdapter } from "@socket.io/cluster-adapter";
 import { setupWorker } from "@socket.io/sticky";
 
+const AWS = require("aws-sdk");
+
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -16,6 +18,12 @@ const io = new Server(server, {
     origin: ["https://admin.socket.io", "http://api.dev.busition.com"],
     credentials: true,
   },
+});
+
+AWS.config.update({
+  region: process.env.REGION,
+  accessKeyId: process.env.KEY,
+  secretAccessKey: process.env.SECRET_KEY,
 });
 
 io.on("connect_error", (err) => {
@@ -69,6 +77,25 @@ busitionConsole.on("connection", (socket) => {
   // });
   socket.on("disconnecting", () => {
     state = false;
+  });
+});
+busitionConsole.on("test", (uuid) => {
+  console.log("test");
+  const params = {
+    TableName: "schedules_v2",
+    KeyConditionExpression: "id = :console_admin_uid",
+    ExpressionAttributeValues: {
+      ":id": { S: uuid },
+    },
+  };
+
+  dynamoDB.query(params, (err, data) => {
+    if (err) {
+      console.error("Error:", err);
+    } else {
+      busitionConsole.to(socket.id).emit("data", data.Items);
+      console.log("Data retrieved successfully:", data.Items);
+    }
   });
 });
 
