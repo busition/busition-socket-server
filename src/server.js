@@ -115,12 +115,17 @@ busitionUser.on("connection", (socket) => {
   //   }
   // });
 
-  socket.on("open_room", (msg) => {
-    const { route_id, type } = msg;
+  socket.on("open_room", async (msg) => {
+    // const { route_id, type } = msg;
+    const room_info = await JSON.parse(msg);
     state = true;
-    console.log(route_id + "?" + type);
-    socket.join(route_id + "?" + type);
-    console.log(`Socket ${socket.id} created room '${route_id + "?" + type}'`);
+    console.log(room_info.route_id + "?" + room_info.type);
+    socket.join(room_info.route_id + "?" + room_info.type);
+    console.log(
+      `Socket ${socket.id} created room '${
+        room_info.route_id + "?" + room_info.type
+      }'`
+    );
 
     /*
     id를 통해서 알맞는 데이터를 선정
