@@ -118,11 +118,11 @@ busitionUser.on("connection", (socket) => {
   socket.on("open_room", async (msg) => {
     // const { route_id, type } = msg;
     const room_info = await JSON.parse(msg);
-    const route_id = room_info.route_id + "?" + room_info.type;
+    const route = room_info.route_id + "?" + room_info.type;
     state = true;
-    console.log(route_id);
-    socket.join(route_id);
-    console.log(`Socket ${socket.id} created room '${route_id}'`);
+    console.log(route);
+    socket.join(route);
+    console.log(`Socket ${socket.id} created room '${route}'`);
 
     /*
     id를 통해서 알맞는 데이터를 선정
@@ -141,9 +141,9 @@ busitionUser.on("connection", (socket) => {
     redisHash(passenger_list);
   });
 
-  socket.on("send_location", async (location) => {
-    console.log(location);
-    const location_list = await JSON.parse(location);
+  socket.on("send_location", async (loc) => {
+    console.log(loc);
+    const location_list = await JSON.parse(loc);
     dummmy_data.location = [location_list.latitude, location_list.longitude];
     dummmy_data.speed = location_list.speed;
   });
