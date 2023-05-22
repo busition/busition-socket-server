@@ -9,8 +9,6 @@ import { instrument } from "@socket.io/admin-ui";
 import { createAdapter } from "@socket.io/cluster-adapter";
 import { setupWorker } from "@socket.io/sticky";
 
-import AWS from "aws-sdk";
-
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -20,11 +18,7 @@ const io = new Server(server, {
   },
 });
 
-await AWS.config.update({
-  region: process.env.REGION,
-  accessKeyId: process.env.KEY,
-  secretAccessKey: process.env.SECRET_KEY,
-});
+import { ListTablesCommand, DynamoDBClient } from "@aws-sdk/client-dynamodb";
 
 io.on("connect_error", (err) => {
   console.log(`connect_error due to ${err.message}`);
@@ -39,7 +33,8 @@ const busitionMate = io.of("/mate");
 
 //redis
 import { createClient } from "redis";
-
+const AWS_ACCESS_KEY_ID = process.env.KEY;
+const AWS_SECRET_ACCESS_KEY = process.env.SECRET_KEY;
 const client = createClient({
   url: process.env.REDIS || "redis://localhost:6379",
 });
@@ -80,12 +75,16 @@ busitionConsole.on("connection", (socket) => {
   });
 });
 busitionConsole.on("test", (uuid) => {
-  const dynamoDB = new AWS.DynamoDB();
-  dynamoDB.listTables({}, (err, data) => {
-    if (err) console.log(err, err.stack);
-    else console.log(data);
-  });
-  console.log("test");
+  const re = process.env.REGION;
+  const client = new DynamoDBClient({ re });
+
+  const tt = async () => {
+    const command = new ListTablesCommand({});
+
+    const response = await client.send(command);
+    console.log(response.TableNames.join("\n"));
+    return response;
+  };
 });
 
 // /user 열린 소켓
