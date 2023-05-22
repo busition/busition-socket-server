@@ -92,7 +92,7 @@ busitionUser.on("connection", (socket) => {
       socket.join(room_id);
       console.log(`Socket ${socket.id} joined room '${room_id}'`);
       state = true;
-      busitionUser.to(room_id).emit("code", 200);
+      busitionUser.to(socket.id).emit("code", 200);
       const send_data = setInterval(() => {
         busitionUser.to(room_id).emit("data", dummmy_data);
         if (!state) {
@@ -100,7 +100,7 @@ busitionUser.on("connection", (socket) => {
         }
       }, 1000);
     } else {
-      busitionUser.to(room_id).emit("code", 404);
+      busitionUser.to(socket.id).emit("code", 404);
 
       console.log(`busition Driver ${room_id} does not exist.`);
     }
