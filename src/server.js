@@ -18,7 +18,13 @@ const io = new Server(server, {
   },
 });
 
-import { ListTablesCommand, DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDB } from "@aws-sdk/client-dynamodb";
+
+const dynamoDB = new DynamoDB({
+  region: "us-east-1",
+  accessKeyId: "YOUR_ACCESS_KEY_ID",
+  secretAccessKey: "YOUR_SECRET_ACCESS_KEY",
+});
 
 io.on("connect_error", (err) => {
   console.log(`connect_error due to ${err.message}`);
@@ -77,16 +83,17 @@ busitionConsole.on("connection", (socket) => {
   socket.on("test", (uuid) => {
     console.log(uuid);
     console.log("test");
-    const re = process.env.REGION;
-    const c = new DynamoDBClient({});
-    console.log(c);
-    const tt = async () => {
-      const command = new ListTablesCommand({});
-
-      const response = await c.send(command);
-      console.log(response.TableNames.join("\n"));
-      return response;
+    const params = {
+      TableName: "my-table",
     };
+
+    dynamoDB.scan(params, async (err, data) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(data);
+      }
+    });
   });
 });
 
