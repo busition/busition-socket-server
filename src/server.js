@@ -12,10 +12,10 @@ import { setupWorker } from "@socket.io/sticky";
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: {
-    origin: ["https://admin.socket.io", "http://api.dev.busition.com"],
-    credentials: true,
-  },
+  // cors: {
+  //   origin: ["https://admin.socket.io", "http://api.dev.busition.com"],
+  //   credentials: true,
+  // },
 });
 
 import { DynamoDB } from "@aws-sdk/client-dynamodb";
@@ -91,6 +91,7 @@ busitionConsole.on("connection", (socket) => {
 
     dynamoDB.scan(params, async (err, data) => {
       if (err) {
+        console.log("err");
         console.log(err);
       } else {
         console.log(data);
