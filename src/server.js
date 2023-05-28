@@ -192,6 +192,7 @@ busitionUser.on("connection", (socket) => {
   });
   socket.on("disconnecting", () => {
     state = false;
+    busitionUser.socketsLeave(socket.id);
   });
 });
 
