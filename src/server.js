@@ -137,17 +137,7 @@ busitionUser.on("connection", (socket) => {
     const room = busitionUser.adapter.rooms.get(route);
     if (room) {
       console.log("exit", room.sockets);
-      const socketIds = Array.from(room.sockets);
-      console.log("exit", socketIds);
-      for (const socketId of socketIds) {
-        const socket = io.sockets.sockets.get(socketId);
-        console.log("유저 정보:", socket.user);
-      }
-      console.log("busition Driver ${room_id} exists.");
-      socket.leave(room_id);
-      socket.emit("code", { code: 404 });
-      console.log(`Socket ${socket.id} left room '${room_id}'`);
-      state = false;
+      room.emit("code", 404);
     } else {
       console.log(`busition Driver ${room_id} does not exist.`);
     }
