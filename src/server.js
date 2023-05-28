@@ -137,7 +137,7 @@ busitionUser.on("connection", (socket) => {
     const room = busitionUser.adapter.rooms.get(route);
     if (room) {
       console.log("exit", room.sockets);
-      room.emit("code", 404);
+      busitionUser.to(room).emit("code", 404);
     } else {
       console.log(`busition Driver ${room_id} does not exist.`);
     }
