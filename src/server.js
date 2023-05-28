@@ -136,6 +136,7 @@ busitionUser.on("connection", (socket) => {
     const route = msg.route_id + "?" + msg.type;
     const room = busitionUser.adapter.rooms.get(route);
     if (room) {
+      console.log("exit", room.sockets);
       const socketIds = Array.from(room.sockets);
       console.log("exit", socketIds);
       for (const socketId of socketIds) {
