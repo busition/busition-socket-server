@@ -127,7 +127,7 @@ busitionUser.on("connection", (socket) => {
       // }, 1000);
     } else {
       busitionUser.to(socket.id).emit("code", 404);
-      console.log(`busition room ${room_id} not open`);
+      // console.log(`busition room ${room_id} not open`);
     }
   });
 
@@ -144,6 +144,7 @@ busitionUser.on("connection", (socket) => {
       }
       console.log("busition Driver ${room_id} exists.");
       socket.leave(room_id);
+      socket.emit("code", { code: 404 });
       console.log(`Socket ${socket.id} left room '${room_id}'`);
       state = false;
     } else {
