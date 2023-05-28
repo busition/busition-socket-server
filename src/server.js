@@ -131,17 +131,24 @@ busitionUser.on("connection", (socket) => {
     }
   });
 
-  // socket.on("close_room", (room_id) => {
-  //   const room = busitionUser.adapter.rooms.get(room_id);
-  //   if (room) {
-  //     console.log("busition Driver ${room_id} exists.");
-  //     socket.leave(room_id);
-  //     console.log(`Socket ${socket.id} left room '${room_id}'`);
-  //     state = false;
-  //   } else {
-  //     console.log(`busition Driver ${room_id} does not exist.`);
-  //   }
-  // });
+  socket.on("exit", (room_id) => {
+    const room = busitionUser.adapter.rooms.get(room_id);
+
+    if (room) {
+      const socketIds = Array.from(room.sockets);
+
+      for (const socketId of socketIds) {
+        const socket = io.sockets.sockets.get(socketId);
+        console.log("유저 정보:", socket.user);
+      }
+      console.log("busition Driver ${room_id} exists.");
+      socket.leave(room_id);
+      console.log(`Socket ${socket.id} left room '${room_id}'`);
+      state = false;
+    } else {
+      console.log(`busition Driver ${room_id} does not exist.`);
+    }
+  });
 
   socket.on("open_room", async (msg) => {
     // const { route_id, type } = msg;
