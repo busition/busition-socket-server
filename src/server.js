@@ -132,6 +132,8 @@ busitionUser.on("connection", (socket) => {
   });
 
   socket.on("exit", async (msg) => {
+    console.log("exit");
+    console.log(msg);
     const room_info = await JSON.parse(msg);
     const route = room_info.route_id + "?" + room_info.type;
     const room = busitionUser.adapter.rooms.get(route);
