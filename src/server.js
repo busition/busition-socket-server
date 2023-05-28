@@ -132,14 +132,12 @@ busitionUser.on("connection", (socket) => {
   });
 
   socket.on("exit", async (msg) => {
-    console.log("exit");
-    console.log(msg);
-
+    console.log("exit", msg);
     const route = msg.route_id + "?" + msg.type;
     const room = busitionUser.adapter.rooms.get(route);
     if (room) {
       const socketIds = Array.from(room.sockets);
-
+      console.log("exit", socketIds);
       for (const socketId of socketIds) {
         const socket = io.sockets.sockets.get(socketId);
         console.log("유저 정보:", socket.user);
