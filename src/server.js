@@ -119,12 +119,12 @@ busitionUser.on("connection", (socket) => {
       console.log(`Socket ${socket.id} joined room '${room_id}'`);
       state = true;
       busitionUser.to(socket.id).emit("code", 200);
-      const send_data = setInterval(() => {
-        busitionUser.to(room_id).emit("data", dummmy_data);
-        if (!state) {
-          clearInterval(send_data);
-        }
-      }, 1000);
+      // const send_data = setInterval(() => {
+      //   busitionUser.to(room_id).emit("data", dummmy_data);
+      //   if (!state) {
+      //     clearInterval(send_data);
+      //   }
+      // }, 1000);
     } else {
       busitionUser.to(socket.id).emit("code", 404);
       console.log(`busition room ${room_id} not open`);
