@@ -112,7 +112,7 @@ busitionUser.on("connection", (socket) => {
   // room_id를 통해서 방에 들어가기 방이 없으면 못드감
   socket.on("join_room", (room_id) => {
     const room = busitionUser.adapter.rooms.get(room_id);
-
+    console.log("join_room", room);
     if (room) {
       console.log("busition Driver ${room_id} exists.");
       socket.join(room_id);
@@ -127,7 +127,7 @@ busitionUser.on("connection", (socket) => {
       }, 1000);
     } else {
       busitionUser.to(socket.id).emit("code", 404);
-      // console.log(`busition room ${room_id} not open`);
+      console.log(`busition room ${room_id} not open`);
     }
   });
 
