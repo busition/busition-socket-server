@@ -13,7 +13,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["https://admin.socket.io", "http://api.dev.busition.com"],
+    origin: ["*"],
     credentials: true,
   },
 });
@@ -91,6 +91,7 @@ busitionConsole.on("connection", (socket) => {
 
     dynamoDB.scan(params, async (err, data) => {
       if (err) {
+        console.log("err");
         console.log(err);
       } else {
         console.log(data);
@@ -118,29 +119,31 @@ busitionUser.on("connection", (socket) => {
       console.log(`Socket ${socket.id} joined room '${room_id}'`);
       state = true;
       busitionUser.to(socket.id).emit("code", 200);
-      // const send_data = setInterval(() => {
-      //   busitionUser.to(room_id).emit("data", dummmy_data);
-      //   if (!state) {
-      //     clearInterval(send_data);
-      //   }
-      // }, 1000);
+      const send_data = setInterval(() => {
+        busitionUser.to(room_id).emit("data", dummmy_data);
+        if (!state) {
+          clearInterval(send_data);
+        }
+      }, 1000);
     } else {
       busitionUser.to(socket.id).emit("code", 404);
-      console.log(`busition room ${room_id} not open`);
+      // console.log(`busition room ${room_id} not open`);
     }
   });
 
-  // socket.on("close_room", (room_id) => {
-  //   const room = busitionUser.adapter.rooms.get(room_id);
-  //   if (room) {
-  //     console.log("busition Driver ${room_id} exists.");
-  //     socket.leave(room_id);
-  //     console.log(`Socket ${socket.id} left room '${room_id}'`);
-  //     state = false;
-  //   } else {
-  //     console.log(`busition Driver ${room_id} does not exist.`);
-  //   }
-  // });
+  socket.on("exit", async (msg) => {
+    console.log("exit", msg);
+    const route = msg.route_id + "?" + msg.type;
+    const room = busitionUser.adapter.rooms.get(route);
+
+    if (room) {
+      console.log("exit", room);
+      busitionUser.to(room).emit("code", 404);
+      busitionUser.adapter.rooms.delete(route);
+    } else {
+      console.log(`busition Driver ${room_id} does not exist.`);
+    }
+  });
 
   socket.on("open_room", async (msg) => {
     // const { route_id, type } = msg;
@@ -189,6 +192,7 @@ busitionUser.on("connection", (socket) => {
   });
   socket.on("disconnecting", () => {
     state = false;
+    busitionUser.socketsLeave(socket.id);
   });
 });
 
