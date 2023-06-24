@@ -164,6 +164,13 @@ busitionUser.on("connection", (socket) => {
       }
     }, 1000);
   });
+  
+  socket.on("company user", (msg) => {
+    const {uuid, id} = msg;
+    console.log(uuid, id);
+    socket.emit("user uuid", {"uuid": uuid, "station uuid": id, "name": "SaM"});
+    }
+    );
 
   socket.on("check_passenger", async (msg) => {
     const passenger_list = await JSON.parse(msg);
