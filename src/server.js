@@ -32,7 +32,7 @@ io.on("connect_error", (err) => {
   console.log(`connect_error due to ${err.message}`);
 });
 // dummy data
-const dummmy_data = { location: [36.611, 126.979], delayed: 330, speed: 0 };
+const dummmy_data = { location: [36.611, 126.979], delayed: 330, speed: 0, stationName: "" };
 
 // namespace 정의, 우리 서비스 별로
 const busitionConsole = io.of("/console");
@@ -169,6 +169,7 @@ busitionUser.on("connection", (socket) => {
     const {uuid, id} = msg;
     console.log(uuid, id);
     socket.emit("user uuid", {"uuid": uuid, "station uuid": id, "name": "SaM"});
+    //Todo
     }
     );
 
@@ -183,6 +184,7 @@ busitionUser.on("connection", (socket) => {
     // const location_list = await JSON.parse(loc);
     dummmy_data.location = [loc.latitude, loc.longitude];
     dummmy_data.speed = loc.speed;
+    dummmy_data.stationName = loc.stationName;
   });
   socket.on("send_user", (uuid) => {
     console.log(uuid);
