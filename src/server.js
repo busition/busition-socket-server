@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config({ path: "/env/.env" });
 console.log(process.env.REDIS);
-//if
+
 import express from "express";
 import http from "http";
 import { Server, Socket } from "socket.io";
