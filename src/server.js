@@ -10,9 +10,7 @@ import { createAdapter } from "@socket.io/cluster-adapter";
 import { setupWorker } from "@socket.io/sticky";
 
 import * as admin from "firebase-admin";
-const serviceAccount = await JSON.parse(
-  "/env/busition-firebase-adminsdk-p6mxk-de15bc77f9.json"
-);
+const serviceAccount = require("/env/busition-firebase-adminsdk-p6mxk-de15bc77f9.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
