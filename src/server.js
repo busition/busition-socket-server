@@ -209,30 +209,32 @@ busitionUser.on("connection", (socket) => {
   });
 
   //test code
+  socket.on("test", () => {
+    console.log("test");
+    const registrationToken =
+      "dzhuApR1QzCrUWEGzDrnJM:APA91bEVzAMvyeIaRxwfChOb8ZlB5YAKn-cpOgnxTPG_qDhG-wuZVDt-xeG9Ta397xUu-PHZ4nhybU4jWD7R30yvtpKvVfgaGAbw4fOSdJBifTbZEnQs1XzzKQFWsR4ONH8Hmtj6W1Gc";
 
+    const message = {
+      data: {
+        score: "850",
+        time: "2:45",
+      },
+      token: registrationToken,
+    };
+
+    // Send a message to the device corresponding to the provided
+    // registration token.
+    getMessaging()
+      .send(message)
+      .then((response) => {
+        // Response is a message ID string.
+        console.log("Successfully sent message:", response);
+      })
+      .catch((error) => {
+        console.log("Error sending message:", error);
+      });
+  });
   // This registration token comes from the client FCM SDKs.
-  const registrationToken =
-    "dzhuApR1QzCrUWEGzDrnJM:APA91bEVzAMvyeIaRxwfChOb8ZlB5YAKn-cpOgnxTPG_qDhG-wuZVDt-xeG9Ta397xUu-PHZ4nhybU4jWD7R30yvtpKvVfgaGAbw4fOSdJBifTbZEnQs1XzzKQFWsR4ONH8Hmtj6W1Gc";
-
-  const message = {
-    data: {
-      score: "850",
-      time: "2:45",
-    },
-    token: registrationToken,
-  };
-
-  // Send a message to the device corresponding to the provided
-  // registration token.
-  getMessaging()
-    .send(message)
-    .then((response) => {
-      // Response is a message ID string.
-      console.log("Successfully sent message:", response);
-    })
-    .catch((error) => {
-      console.log("Error sending message:", error);
-    });
 
   //test code
 });
