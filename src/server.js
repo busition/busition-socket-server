@@ -9,9 +9,10 @@ import { instrument } from "@socket.io/admin-ui";
 import { createAdapter } from "@socket.io/cluster-adapter";
 import { setupWorker } from "@socket.io/sticky";
 
-import serviceAccount from "/env/busition-firebase-adminsdk-p6mxk-de15bc77f9.json";
 import * as admin from "firebase-admin";
-
+const serviceAccount = json.parse(
+  "/env/busition-firebase-adminsdk-p6mxk-de15bc77f9.json"
+);
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
