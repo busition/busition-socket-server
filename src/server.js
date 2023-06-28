@@ -9,6 +9,14 @@ import { instrument } from "@socket.io/admin-ui";
 import { createAdapter } from "@socket.io/cluster-adapter";
 import { setupWorker } from "@socket.io/sticky";
 
+import { initializeApp, getMessaging } from "firebase-admin/app";
+
+var serviceAccount = require("/env/busition-firebase-adminsdk-p6mxk-de15bc77f9.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
