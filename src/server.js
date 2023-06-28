@@ -32,7 +32,12 @@ io.on("connect_error", (err) => {
   console.log(`connect_error due to ${err.message}`);
 });
 // dummy data
-const dummmy_data = { location: [36.611, 126.979], delayed: 330, speed: 0, stationName: "" };
+const dummmy_data = {
+  location: [36.611, 126.979],
+  delayed: 330,
+  speed: 0,
+  stationName: "",
+};
 
 // namespace 정의, 우리 서비스 별로
 const busitionConsole = io.of("/console");
@@ -164,14 +169,13 @@ busitionUser.on("connection", (socket) => {
       }
     }, 1000);
   });
-  
+
   socket.on("company user", (msg) => {
-    const {uuid, id} = msg;
+    const { uuid, id } = msg;
     console.log(uuid, id);
-    socket.emit("user uuid", {"uuid": uuid, "station uuid": id, "name": "SaM"});
+    socket.emit("user uuid", { uuid: uuid, "station uuid": id, name: "SaM" });
     //Todo
-    }
-    );
+  });
 
   socket.on("check_passenger", async (msg) => {
     const passenger_list = await JSON.parse(msg);
@@ -203,6 +207,34 @@ busitionUser.on("connection", (socket) => {
     state = false;
     busitionUser.socketsLeave(socket.id);
   });
+
+  //test code
+
+  // This registration token comes from the client FCM SDKs.
+  const registrationToken =
+    "dzhuApR1QzCrUWEGzDrnJM:APA91bEVzAMvyeIaRxwfChOb8ZlB5YAKn-cpOgnxTPG_qDhG-wuZVDt-xeG9Ta397xUu-PHZ4nhybU4jWD7R30yvtpKvVfgaGAbw4fOSdJBifTbZEnQs1XzzKQFWsR4ONH8Hmtj6W1Gc";
+
+  const message = {
+    data: {
+      score: "850",
+      time: "2:45",
+    },
+    token: registrationToken,
+  };
+
+  // Send a message to the device corresponding to the provided
+  // registration token.
+  getMessaging()
+    .send(message)
+    .then((response) => {
+      // Response is a message ID string.
+      console.log("Successfully sent message:", response);
+    })
+    .catch((error) => {
+      console.log("Error sending message:", error);
+    });
+
+  //test code
 });
 
 // /mate로 열린 소켓
