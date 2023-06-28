@@ -10,10 +10,18 @@ import { createAdapter } from "@socket.io/cluster-adapter";
 import { setupWorker } from "@socket.io/sticky";
 
 import * as admin from "firebase-admin";
-const serviceAccount = require("/env/busition-firebase-adminsdk-p6mxk-de15bc77f9.json");
+// const serviceAccount = require("/env/busition-firebase-adminsdk-p6mxk-de15bc77f9.json");
+async function load() {
+  const data = await fetch(
+    "/env/busition-firebase-adminsdk-p6mxk-de15bc77f9.json"
+  );
+  // JSON으로 해석
+  const obj = await data.json();
+}
 
+load();
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert(load()),
 });
 
 const app = express();
