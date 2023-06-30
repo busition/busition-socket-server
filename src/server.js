@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
-dotenv.config({ path: "/env/.env" });
-console.log(process.env.REDIS);
 
+dotenv.config({ path: "/env/.env" });
+import { getRedisClient } from "./redis-server.js";
 import express from "express";
 import http from "http";
 import { Server, Socket } from "socket.io";
@@ -10,9 +10,14 @@ import { createAdapter } from "@socket.io/cluster-adapter";
 import { setupWorker } from "@socket.io/sticky";
 
 import admin from "firebase-admin";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+console.log(__dirname);
 const serviceAccount = "/env/busition-firebase-adminsdk-p6mxk-de15bc77f9.json";
 
-admin.initializeApp({
+await admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
@@ -25,19 +30,14 @@ const io = new Server(server, {
   },
 });
 
-import { DynamoDB } from "@aws-sdk/client-dynamodb";
-
-const dynamoDB = new DynamoDB({
-  region: process.env.REGION,
-  credentials: {
-    accessKeyId: process.env.KEY,
-    secretAccessKey: process.env.SECRET_KEY,
-  },
-});
-
 io.on("connect_error", (err) => {
   console.log(`connect_error due to ${err.message}`);
 });
+
+//redis
+const client = await getRedisClient();
+//redis
+
 // dummy data
 const dummmy_data = {
   location: [36.611, 126.979],
@@ -50,17 +50,6 @@ const dummmy_data = {
 const busitionConsole = io.of("/console");
 const busitionUser = io.of("/user");
 const busitionMate = io.of("/mate");
-
-//redis
-import { createClient } from "redis";
-
-const client = createClient({
-  url: process.env.REDIS || "redis://localhost:6379",
-});
-
-client.on("error", (err) => console.log("Redis Client Error", err));
-
-await client.connect();
 
 app.get("/", (req, res) => {
   const rooms = Array.from(busitionUser.adapter.rooms);
@@ -216,16 +205,16 @@ busitionUser.on("connection", (socket) => {
   });
 
   //test code
-  socket.on("test", () => {
+  socket.on("test", (msg) => {
     console.log("test");
-    const registrationToken =
-      "dzhuApR1QzCrUWEGzDrnJM:APA91bEVzAMvyeIaRxwfChOb8ZlB5YAKn-cpOgnxTPG_qDhG-wuZVDt-xeG9Ta397xUu-PHZ4nhybU4jWD7R30yvtpKvVfgaGAbw4fOSdJBifTbZEnQs1XzzKQFWsR4ONH8Hmtj6W1Gc";
+    const registrationToken = msg;
 
     const message = {
-      data: {
-        score: "850",
-        time: "2:45",
+      notification: {
+        title: "Portugal vs. Denmark",
+        body: "5 to 1",
       },
+
       token: registrationToken,
     };
 
