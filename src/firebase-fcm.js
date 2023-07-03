@@ -7,8 +7,6 @@ await admin.initializeApp({
 });
 
 function sendNotification(token) {
-  const registrationToken = msg;
-
   const message = {
     notification: {
       title: "Sample test Title",
