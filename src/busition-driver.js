@@ -1,4 +1,4 @@
-import logger from "./logger.js";
+import logger from "./winston.js";
 
 // dummy data
 const dummmy_data = {

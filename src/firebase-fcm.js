@@ -1,4 +1,5 @@
 import admin from "firebase-admin";
+import logger from "./winston.js";
 
 const serviceAccount = "/env/busition-firebase-adminsdk-p6mxk-de15bc77f9.json";
 

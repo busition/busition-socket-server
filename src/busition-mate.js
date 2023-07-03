@@ -1,4 +1,4 @@
-import logger from "./logger.js";
+import logger from "./winston.js";
 
 function BusitionMate_join_room(socket, user_id, room_id) {
   logger.user(socket.id, "login success : ", user_id);
