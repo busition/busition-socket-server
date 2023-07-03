@@ -6,7 +6,7 @@ await admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
-function sendNotification(token) {
+function sendNotification(socket, token) {
   const message = {
     notification: {
       title: "Sample test Title",
@@ -23,10 +23,10 @@ function sendNotification(token) {
     .send(message)
     .then((response) => {
       // Response is a message ID string.
-      console.log("Successfully sent message:", response);
+      logger.info("Successfully sent message:", socket.id, response);
     })
     .catch((error) => {
-      console.log("Error sending message:", error);
+      logger.error("Error sending message:", socket.id, error);
     });
 }
 

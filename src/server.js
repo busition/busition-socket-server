@@ -62,18 +62,22 @@ app.get("/", (req, res) => {
 busitionTest.on("connection", (socket) => {
   console.log("here is test namespace");
   socket.on("test", (msg) => {
-    sendNotification(msg);
+    sendNotification(socket, msg);
+  });
+
+  socket.on("test id", (msg) => {
+    console.log(socket.id);
   });
 });
 
 // /console로 열린 소켓
 busitionConsole.on("connection", (socket) => {
-  console.log("here is console namespace");
+  logger.info(`Socket ${socket.id} connected to console namespace`);
 });
 
 // /user 열린 소켓
 busitionUser.on("connection", (socket) => {
-  console.log("here is user namespace");
+  logger.info(`Socket ${socket.id} connected to user namespace`);
 
   socket.on("exit", async (msg) => {
     BusitionDriver_exit(busitionUser, msg);
@@ -117,9 +121,9 @@ busitionUser.on("connection", (socket) => {
 
 // /mate로 열린 소켓
 busitionMate.on("connection", (socket) => {
-  console.log("here is mate namespace");
+  logger.info(`Socket ${socket.id} connected to mate namespace`);
 
-  socket.on("join_room", (room_id) => {
-    BusitionMate_join_room(socket, room_id);
+  socket.on("join_room", (msg) => {
+    BusitionMate_join_room(socket, msg.user_id, msg.room_id);
   });
 });

@@ -1,6 +1,7 @@
 //redis
 import { createClient } from "redis";
 import dotenv from "dotenv";
+import logger from "./winston.js";
 
 async function getRedisClient() {
   dotenv.config({ path: "/socket_sever_data/.env" });
@@ -9,7 +10,7 @@ async function getRedisClient() {
     url: process.env.REDIS || "redis://localhost:6379",
   });
 
-  client.on("error", (err) => console.log("Redis Client Error", err));
+  client.on("error", (err) => logger.error("Redis Client Error", err));
 
   await client.connect();
   return client;

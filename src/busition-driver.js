@@ -1,3 +1,5 @@
+import logger from "./logger.js";
+
 // dummy data
 const dummmy_data = {
   location: [36.611, 126.979],
@@ -8,11 +10,12 @@ const dummmy_data = {
 
 async function BusitionDriver_open_room(socket, busitionUser, msg) {
   const room_info = await JSON.parse(msg);
+  logger.user(socket.id, "login success : ", msg.user_id);
   const route = room_info.route_id + "?" + room_info.type;
   const state = true;
-  console.log(route);
+  logger.info("BusitionDriver_open_room", route);
   socket.join(route);
-  console.log(`Socket ${socket.id} created room '${route}'`);
+  logger.info(`Socket ${socket.id} created room '${route}'`);
 
   const send_data = setInterval(() => {
     busitionUser.to(route).emit("data", dummmy_data);
@@ -27,11 +30,11 @@ function BusitionDriver_exit(busitionUser, msg) {
   const room = busitionUser.adapter.rooms.get(route);
 
   if (room) {
-    console.log("exit", room);
+    logger.info(`Socket ${socket.id} exit room '${route}'`);
     busitionUser.to(room).emit("code", 404);
     busitionUser.adapter.rooms.delete(route);
   } else {
-    console.log(`busition Driver ${room_id} does not exist.`);
+    logger.info(`busition Driver ${route} does not exist.`);
   }
 }
 
@@ -51,6 +54,7 @@ function BusitionDriver_update_location(loc) {
 
 function BusitionDriver_disconnecting(socket, busitionUser) {
   state = false;
+  logger.info(`Socket ${socket.id} disconnecting`);
   busitionUser.socketsLeave(socket.id);
 }
 export {
