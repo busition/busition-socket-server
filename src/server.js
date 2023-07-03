@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 
-dotenv.config({ path: "/socket_sever_data/.env" });
+dotenv.config({ path: "/env/.env" });
 import { getRedisClient } from "./redis-server.js";
 import express from "express";
 import http from "http";

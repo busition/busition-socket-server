@@ -1,7 +1,6 @@
 import admin from "firebase-admin";
 
-const serviceAccount =
-  "/socket_sever_data/busition-firebase-adminsdk-p6mxk-de15bc77f9.json";
+const serviceAccount = "/env/busition-firebase-adminsdk-p6mxk-de15bc77f9.json";
 
 await admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
