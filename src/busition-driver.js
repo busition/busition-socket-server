@@ -12,7 +12,7 @@ const state = true;
 
 async function BusitionDriver_open_room(socket, busitionUser, msg) {
   const room_info = await JSON.parse(msg);
-  logger.http(socket.id, "login success : ", msg.user_id);
+  logger.http(`${socket.id} login success :  ${user_id}`);
   const route = room_info.route_id + "?" + room_info.type;
 
   logger.info("BusitionDriver_open_room", route);
