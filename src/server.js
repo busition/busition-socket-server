@@ -86,7 +86,7 @@ busitionUser.on("connection", (socket) => {
   logger.info(`Socket ${socket.id} connected to user namespace`);
 
   socket.on("exit", async (msg) => {
-    BusitionDriver_exit(busitionUser, msg);
+    BusitionDriver_exit(busitionUser, socket, msg);
   });
 
   socket.on("open_room", async (msg) => {
