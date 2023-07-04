@@ -8,11 +8,13 @@ const dummmy_data = {
   stationName: "",
 };
 
+const state = true;
+
 async function BusitionDriver_open_room(socket, busitionUser, msg) {
   const room_info = await JSON.parse(msg);
   logger.user(socket.id, "login success : ", msg.user_id);
   const route = room_info.route_id + "?" + room_info.type;
-  const state = true;
+
   logger.info("BusitionDriver_open_room", route);
   socket.join(route);
   logger.info(`Socket ${socket.id} created room '${route}'`);
@@ -53,7 +55,6 @@ function BusitionDriver_update_location(loc) {
 }
 
 function BusitionDriver_disconnecting(socket, busitionUser) {
-  state = false;
   logger.info(`Socket ${socket.id} disconnecting`);
   busitionUser.socketsLeave(socket.id);
 }
