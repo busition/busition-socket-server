@@ -33,7 +33,7 @@ const logger = winston.createLogger({
       zippedArchive: true,
     }),
     new winstonDaily({
-      level: "user",
+      level: "http",
       datePattern: "YYYY-MM-DD",
       dirname: `${logDir}/user`,
       filename: `%DATE%.user.log`,
