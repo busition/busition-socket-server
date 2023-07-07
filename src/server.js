@@ -81,7 +81,7 @@ busitionTest.on("connection", (socket) => {
     console.log(socket.id);
   });
   socket.on("test join", async (msg) => {
-    state = true;
+    const state = true;
     console.log(msg);
     const send_data = setInterval(() => {
       socket.emit("data", dummmy_data);
