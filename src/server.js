@@ -79,6 +79,7 @@ const dummmy_data1 = {
 };
 
 busitionTest.on("connection", (socket) => {
+  const state = true;
   console.log("here is test namespace");
   socket.on("test", (msg) => {
     sendNotification(socket, msg);
@@ -88,7 +89,7 @@ busitionTest.on("connection", (socket) => {
     console.log(socket.id);
   });
   socket.on("test join", async (msg) => {
-    const state = true;
+    
     console.log(msg);
     const send_data = setInterval(() => {
       socket.emit("data", dummmy_data);
@@ -97,6 +98,9 @@ busitionTest.on("connection", (socket) => {
         clearInterval(send_data);
       }
     }, 1000);
+  });
+  socket.on("disconnecting", () => {
+    state = false;
   });
 });
 
