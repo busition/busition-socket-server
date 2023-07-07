@@ -71,6 +71,13 @@ const dummmy_data = {
   speed: 0,
   stationName: "test",
 };
+const dummmy_data1 = {
+  location: [36.111, 126.111],
+  delayed: 300,
+  speed: 10,
+  stationName: "test number 2",
+};
+
 busitionTest.on("connection", (socket) => {
   console.log("here is test namespace");
   socket.on("test", (msg) => {
@@ -85,6 +92,7 @@ busitionTest.on("connection", (socket) => {
     console.log(msg);
     const send_data = setInterval(() => {
       socket.emit("data", dummmy_data);
+      socket.emit("data", dummmy_data1);
       if (!state) {
         clearInterval(send_data);
       }
