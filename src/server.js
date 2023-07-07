@@ -80,7 +80,7 @@ busitionTest.on("connection", (socket) => {
   socket.on("test id", (msg) => {
     console.log(socket.id);
   });
-  socket.on("test join", (msg) => {
+  socket.on("test join", async (msg) => {
     state = true;
     console.log(msg);
     const send_data = setInterval(() => {
