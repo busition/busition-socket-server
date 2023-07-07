@@ -84,7 +84,7 @@ busitionTest.on("connection", (socket) => {
     state = true;
     console.log(msg);
     const send_data = setInterval(() => {
-      busitionTest.to(socket).emit("data", dummmy_data);
+      socket.emit("data", dummmy_data);
       if (!state) {
         clearInterval(send_data);
       }
