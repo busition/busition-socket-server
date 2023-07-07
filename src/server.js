@@ -65,6 +65,12 @@ app.get("/", (req, res) => {
 });
 
 //test code
+const dummmy_data = {
+  location: [36.611, 126.979],
+  delayed: 330,
+  speed: 0,
+  stationName: "test",
+};
 busitionTest.on("connection", (socket) => {
   console.log("here is test namespace");
   socket.on("test", (msg) => {
@@ -73,6 +79,15 @@ busitionTest.on("connection", (socket) => {
 
   socket.on("test id", (msg) => {
     console.log(socket.id);
+  });
+  socket.on("test join", (msg) => {
+    console.log(msg);
+    const send_data = setInterval(() => {
+      busitionTest.to(socket).emit("data", dummmy_data);
+      if (!state) {
+        clearInterval(send_data);
+      }
+    }, 1000);
   });
 });
 
