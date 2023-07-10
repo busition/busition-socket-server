@@ -107,14 +107,14 @@ busitionTest.on("connection", (socket) => {
     const test_room = "d641665e-781e-4571-860b-0ee9a6d2084c"
     socket.join(test_room)
     const d = {
-      location: [36.611, 126.979],
+      location: [36.611, 126.998],
       delayed: 330,
       speed: 0,
       stationName: "test",
     };
     const time =0 
     const send_data = setInterval(() => {
-      busitionTest.to(route).emit("data", d);
+      busitionTest.to(test_room).emit("data", d);
       time++
       d.location[0] += 0.001
       if (!state) {
