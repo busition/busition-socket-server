@@ -115,7 +115,7 @@ busitionTest.on("connection", (socket) => {
     const time =0 
     const send_data = setInterval(() => {
       busitionTest.to(test_room).emit("data", d);
-      time++
+      time+=1
       d.location[0] += 0.001
       if (!state) {
         clearInterval(send_data);
