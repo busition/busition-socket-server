@@ -106,13 +106,13 @@ busitionTest.on("connection", (socket) => {
   socket.on("test open", async (msg) =>{
     const test_room = "d641665e-781e-4571-860b-0ee9a6d2084c"
     socket.join(test_room)
-    const d = {
+    var d = {
       location: [36.611, 126.998],
       delayed: 330,
       speed: 0,
       stationName: "test",
     };
-    const time =0 
+    var time =0 
     const send_data = setInterval(() => {
       busitionTest.to(test_room).emit("data", d);
       time+=1
