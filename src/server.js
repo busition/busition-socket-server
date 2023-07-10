@@ -89,7 +89,6 @@ busitionTest.on("connection", (socket) => {
     console.log(socket.id);
   });
   socket.on("test join", async (msg) => {
-    
     console.log(msg);
     const send_data = setInterval(() => {
       socket.emit("data", dummmy_data);
@@ -103,32 +102,32 @@ busitionTest.on("connection", (socket) => {
     state = false;
   });
 
-  socket.on("test open", async (msg) =>{
-    const test_room = "d641665e-781e-4571-860b-0ee9a6d2084c?"
-    socket.join(test_room)
+  socket.on("test open", async (msg) => {
+    const test_room = "d641665e-781e-4571-860b-0ee9a6d2084c?0";
+    socket.join(test_room);
     var d = {
       location: [36.611, 126.998],
       delayed: 330,
       speed: 0,
       stationName: "test",
     };
-    var time =0 
+    var time = 0;
     const send_data = setInterval(() => {
       busitionTest.to(test_room).emit("data", d);
-      time+=1
-      d.location[0] += 0.001
+      time += 1;
+      d.location[0] += 0.001;
       if (!state) {
         clearInterval(send_data);
       }
-      if (time%50 == 0){
-        d.location[0] = 36.611
+      if (time % 50 == 0) {
+        d.location[0] = 36.611;
       }
-      if (d==600){
-        state = false
+      if (d == 600) {
+        state = false;
         busitionTest.adapter.rooms.delete(test_room);
       }
     }, 1000);
-  })
+  });
 });
 
 // /console로 열린 소켓
