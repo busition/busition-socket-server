@@ -103,7 +103,7 @@ busitionTest.on("connection", (socket) => {
   });
 
   socket.on("test open", async (msg) => {
-    const test_room = "d641665e-781e-4571-860b-0ee9a6d2084c?0";
+    const test_room = "aa69c6b9-a836-4a72-be33-2b5a5df91bf9?0";
     socket.join(test_room);
     var d = {
       location: [36.611, 126.998],
