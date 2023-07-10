@@ -102,6 +102,33 @@ busitionTest.on("connection", (socket) => {
   socket.on("disconnecting", () => {
     state = false;
   });
+
+  socket.on("test open", async (msg) =>{
+    const test_room = "d641665e-781e-4571-860b-0ee9a6d2084c"
+    socket.join(test_room)
+    const d = {
+      location: [36.611, 126.979],
+      delayed: 330,
+      speed: 0,
+      stationName: "test",
+    };
+    const time =0 
+    const send_data = setInterval(() => {
+      busitionTest.to(route).emit("data", d);
+      time++
+      d.location[0] += 0.001
+      if (!state) {
+        clearInterval(send_data);
+      }
+      if (time%50 == 0){
+        d.location[0] = 36.611
+      }
+      if (d==600){
+        state = false
+        busitionTest.adapter.rooms.delete(test_room);
+      }
+    }, 1000);
+  })
 });
 
 // /console로 열린 소켓
