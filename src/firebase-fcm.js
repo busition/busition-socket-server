@@ -24,10 +24,10 @@ function sendNotification(socket, token) {
     .send(message)
     .then((response) => {
       // Response is a message ID string.
-      logger.info("Successfully sent message:", socket.id, response);
+      logger.info("Successfully sent message:" + socket.id + response);
     })
     .catch((error) => {
-      logger.error("Error sending message:", socket.id, error);
+      logger.error("Error sending message:" + socket.id + error);
     });
 }
 
