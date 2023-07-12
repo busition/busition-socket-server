@@ -79,7 +79,7 @@ const dummmy_data1 = {
 };
 
 busitionTest.on("connection", (socket) => {
-  const state = true;
+  var state = true;
   console.log("here is test namespace");
   socket.on("test", (msg) => {
     sendNotification(socket, msg);
