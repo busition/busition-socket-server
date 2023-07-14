@@ -46,6 +46,7 @@ setupWorker(io);
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
   logger.info(`Server listening on port ${PORT}`);
+  test();
   // logger.error(`Server listening on port ${PORT}`);
 });
 
@@ -77,7 +78,27 @@ const dummmy_data1 = {
   speed: 10,
   stationName: "test number 2",
 };
-
+function test() {
+  const test_room = "0";
+  var d = {
+    location: [36.611, 126.998],
+    delayed: 330,
+    speed: 0,
+    stationName: "test",
+  };
+  var time = 0;
+  const send_data = setInterval(() => {
+    busitionTest.to(test_room).emit("data", d);
+    time += 1;
+    d.location[0] += 0.001;
+    if (!state) {
+      clearInterval(send_data);
+    }
+    if (time % 50 == 0) {
+      d.location[0] = 36.611;
+    }
+  }, 1000);
+}
 busitionTest.on("connection", (socket) => {
   var state = true;
   console.log("here is test namespace");
@@ -108,30 +129,7 @@ busitionTest.on("connection", (socket) => {
   });
 
   socket.on("test open", async (msg) => {
-    const test_room = "aa69c6b9-a836-4a72-be33-2b5a5df91bf9?0";
-    socket.join(test_room);
-    var d = {
-      location: [36.611, 126.998],
-      delayed: 330,
-      speed: 0,
-      stationName: "test",
-    };
-    var time = 0;
-    const send_data = setInterval(() => {
-      busitionTest.to(test_room).emit("data", d);
-      time += 1;
-      d.location[0] += 0.001;
-      if (!state) {
-        clearInterval(send_data);
-      }
-      if (time % 50 == 0) {
-        d.location[0] = 36.611;
-      }
-      if (d == 600) {
-        state = false;
-        busitionTest.adapter.rooms.delete(test_room);
-      }
-    }, 1000);
+    socket.join(msg);
   });
 });
 
