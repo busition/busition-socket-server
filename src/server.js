@@ -79,6 +79,7 @@ const dummmy_data1 = {
   stationName: "test number 2",
 };
 function test() {
+  var state = true;
   const test_room = "0";
   var d = {
     location: [36.611, 126.998],
