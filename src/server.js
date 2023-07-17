@@ -127,6 +127,7 @@ busitionTest.on("connection", (socket) => {
 
   socket.on("test console", async (msg) => {
     const test_room = msg;
+    console.log(msg);
     socket.join(test_room);
   });
 
