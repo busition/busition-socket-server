@@ -126,7 +126,7 @@ busitionTest.on("connection", (socket) => {
   });
 
   socket.on("test console", async (msg) => {
-    const test_room = "aa69c6b9-a836-4a72-be33-2b5a5df91bf9?0";
+    const test_room = msg;
     socket.join(test_room);
   });
 
