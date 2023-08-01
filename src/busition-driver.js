@@ -28,7 +28,7 @@ async function BusitionDriver_open_room(socket, busitionUser, msg) {
 }
 
 function BusitionDriver_exit(busitionUser, socket, msg) {
-  const route = msg.route_id + "?" + msg.type;
+  const route = msg.route_id;
   const room = busitionUser.adapter.rooms.get(route);
 
   if (room) {
