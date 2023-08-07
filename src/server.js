@@ -80,7 +80,7 @@ const dummmy_data1 = {
 };
 function test() {
   var state = true;
-  const test_room = "0";
+  const test_room = "1";
   var d = {
     location: [36.611, 126.998],
     delayed: 330,
