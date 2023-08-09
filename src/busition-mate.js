@@ -7,9 +7,9 @@ function BusitionMate_join_room(busitionUser, socket, user_id, room_id) {
   if (room) {
     socket.join(room_id);
     logger.info(`Socket ${socket.id} joined room '${room_id}'`);
-    busitionUser.to(socket.id).emit("code", 200);
+    socket.to(socket.id).emit("code", 200);
   } else {
-    busitionUser.to(socket.id).emit("code", 404);
+    socket.to(socket.id).emit("code", 404);
     logger.info(`busition room ${room_id} not open`);
   }
 }
