@@ -92,6 +92,7 @@ function test() {
     busitionTest.to(test_room).emit("data", d);
     busitionUser.to(test_room).emit("data", d);
     busitionMate.to(test_room).emit("data", d);
+    console.log(d);
     time += 1;
     d.location[0] += 0.001;
     if (!state) {
