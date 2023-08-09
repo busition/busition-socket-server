@@ -1,6 +1,6 @@
 import logger from "./winston.js";
 
-function BusitionMate_join_room(socket, user_id, room_id) {
+function BusitionMate_join_room(busitionUser, socket, user_id, room_id) {
   logger.http(`${socket.id} login success :  ${user_id}`);
   const room = busitionUser.adapter.rooms.get(room_id);
   logger.info(`Socket ${socket.id} try to join room '${room_id}'`);
