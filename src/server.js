@@ -190,6 +190,12 @@ busitionMate.on("connection", (socket) => {
   logger.info(`Socket ${socket.id} connected to mate namespace`);
 
   socket.on("join_room", (msg) => {
-    BusitionMate_join_room(busitionUser, socket, msg.user_id, msg.room_id);
+    BusitionMate_join_room(
+      busitionUser,
+      socket,
+      msg.user_id,
+      msg.room_id,
+      busitionMate
+    );
   });
 });
