@@ -88,11 +88,10 @@ function test() {
     stationName: "test",
   };
   var time = 0;
+  busitionUser.join("1");
+
   const send_data = setInterval(() => {
-    busitionTest.to(test_room).emit("data", d);
-    busitionUser.to("1").emit("data", d);
-    busitionMate.to("1").emit("data", d);
-    console.log(d);
+    busitionUser.to(test_room).emit("data", d);
     time += 1;
     d.location[0] += 0.001;
     if (!state) {
