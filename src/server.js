@@ -43,6 +43,12 @@ instrument(io, {
 io.adapter(createAdapter());
 
 setupWorker(io);
+// namespace 정의, 우리 서비스 별로
+const busitionConsole = io.of("/console");
+const busitionUser = io.of("/user");
+const busitionMate = io.of("/mate");
+const busitionTest = io.of("/test");
+
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
   logger.info(`Server listening on port ${PORT}`);
@@ -53,12 +59,6 @@ server.listen(PORT, () => {
 //redis
 const client = await getRedisClient();
 //redis
-
-// namespace 정의, 우리 서비스 별로
-const busitionConsole = io.of("/console");
-const busitionUser = io.of("/user");
-const busitionMate = io.of("/mate");
-const busitionTest = io.of("/test");
 
 app.get("/", (req, res) => {
   const rooms = Array.from(busitionUser.adapter.rooms);
