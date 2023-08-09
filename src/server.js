@@ -90,8 +90,8 @@ function test() {
   var time = 0;
   const send_data = setInterval(() => {
     busitionTest.to(test_room).emit("data", d);
-    busitionUser.to(test_room).emit("data", d);
-    busitionMate.to(test_room).emit("data", d);
+    busitionUser.to("1").emit("data", d);
+    busitionMate.to("1").emit("data", d);
     console.log(d);
     time += 1;
     d.location[0] += 0.001;
