@@ -14,6 +14,10 @@ function BusitionMate_join_room(
     socket.join(room_id);
     logger.info(`Socket ${socket.id} joined room '${room_id}'`);
     busitionMate.to(socket.id).emit("code", 200);
+  } else if (room_id == "1") {
+    socket.join(room_id);
+    logger.info(`Socket ${socket.id} joined test room '${room_id}'`);
+    busitionMate.to(socket.id).emit("code", 200);
   } else {
     busitionMate.to(socket.id).emit("code", 404);
     logger.info(`busition room ${room} not open`);
