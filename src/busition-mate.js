@@ -16,7 +16,7 @@ function BusitionMate_join_room(
     busitionMate.to(socket.id).emit("code", 200);
   } else {
     busitionMate.to(socket.id).emit("code", 404);
-    logger.info(`busition room ${room_id} not open`);
+    logger.info(`busition room ${room} not open`);
   }
 }
 
