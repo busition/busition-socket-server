@@ -40,10 +40,30 @@ function BusitionDriver_exit(busitionUser, socket, msg) {
   }
 }
 
-function BusitionDriver_check_company_user(socket, msg) {
+async function BusitionDriver_check_company_user(socket, msg, client) {
   const { uuid, id } = msg;
   console.log(uuid, id);
-  socket.emit("user uuid", { uuid: uuid, "station uuid": id, name: "SaM" });
+  try {
+    const res = await client.query(
+      "SELECT * FROM users WHERE mate_service_uuid = $1",
+      [uuid]
+    );
+    console.log(res.rows);
+    if (res.rows.length > 0) {
+      const tmp = res.rows[0];
+      console.log("User found:", res.rows[0]);
+      socket.emit("user uuid", {
+        uuid: uuid,
+        "station uuid": id,
+        name: tmp.username,
+      });
+    } else {
+      console.log("User not found.");
+    }
+  } catch (err) {
+    logger.error(err);
+  }
+
   //Todo
 }
 

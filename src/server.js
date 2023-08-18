@@ -18,6 +18,8 @@ import {
   BusitionDriver_update_location,
   BusitionDriver_disconnecting,
 } from "./busition-driver.js";
+import pg from "pg";
+
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -60,6 +62,9 @@ server.listen(PORT, () => {
 const client = await getRedisClient();
 //redis
 
+//postgres
+const psqlClient = await getPostgresqlClient();
+//postgres
 app.get("/", (req, res) => {
   const rooms = Array.from(busitionUser.adapter.rooms);
   res.send(rooms);
@@ -156,7 +161,7 @@ busitionUser.on("connection", (socket) => {
   });
 
   socket.on("company user", (msg) => {
-    BusitionDriver_check_company_user(socket, msg);
+    BusitionDriver_check_company_user(socket, msg, psqlClient);
   });
 
   socket.on("send_location", async (msg) => {
