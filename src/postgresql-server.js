@@ -14,3 +14,5 @@ async function getPostgresqlClient() {
   await client.connect();
   return client;
 }
+
+export { getPostgresqlClient };
