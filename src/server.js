@@ -18,7 +18,7 @@ import {
   BusitionDriver_update_location,
   BusitionDriver_disconnecting,
 } from "./busition-driver.js";
-import pg from "pg";
+import { getPostgresqlClient } from "./postgresql-server.js";
 
 const app = express();
 const server = http.createServer(app);
