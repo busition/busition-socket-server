@@ -19,6 +19,7 @@ import {
   BusitionDriver_disconnecting,
 } from "./busition-driver.js";
 import { getPostgresqlClient } from "./postgresql-server.js";
+import { verifyToken } from "./jwt.js";
 
 const app = express();
 const server = http.createServer(app);
