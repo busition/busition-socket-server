@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 
 function verifyToken(token, type) {
   dotenv.config({ path: "/socket_sever_data/.env" });
+  console.log("Token:", token);
+  console.log("Secret:", process.env.COMBINESECRET);
 
   try {
     const decodedToken = jwt.verify(token, process.env.COMBINESECRET);
