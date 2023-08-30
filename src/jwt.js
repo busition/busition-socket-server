@@ -13,6 +13,14 @@ function verifyToken(token, type) {
   } catch (error) {
     console.log("Error decoding token:", error.message);
   }
+  try {
+    const decodedToken = jwt.verify(token, process.env.DRIVERSECRET, {
+      algorithms: [process.env.SECRETALGORITHM],
+    });
+    console.log("Decoded Token:", decodedToken);
+  } catch (error) {
+    console.log("Error decoding token:", error.message);
+  }
 }
 
 export { verifyToken };
