@@ -146,7 +146,7 @@ busitionTest.on("connection", (socket) => {
   socket.on("test verify", async (msg) => {
     console.log(msg);
     const { token, type } = msg;
-    verifyToken(token, type);
+    console.log(verifyToken(token, type));
   });
 });
 
