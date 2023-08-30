@@ -6,6 +6,7 @@ function verifyToken(token, type) {
   console.log("Token:", token);
 
   try {
+    console.log(jwt.decode(token));
     const decodedToken = jwt.verify(token, process.env.COMBINESECRET, {
       algorithms: [process.env.SECRETALGORITHM],
     });
