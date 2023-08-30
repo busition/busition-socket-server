@@ -15,7 +15,7 @@ function verifyToken(token, type) {
     console.log("Error decoding token:", error.message);
   }
   try {
-    const decodedToken = jwt.verify(token, process.env.DRIVERSECRET, {
+    const decodedToken = jwt.verify(token, "SECRET_KEY", {
       algorithms: [process.env.SECRETALGORITHM],
     });
     console.log("Decoded Token:", decodedToken);
