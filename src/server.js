@@ -141,6 +141,13 @@ busitionTest.on("connection", (socket) => {
   socket.on("test open", async (msg) => {
     socket.join(msg);
   });
+
+  socket.on("test verify", async (msg) => {
+    console.log(msg);
+    const { token, type } = msg;
+    const decoded = await verifyToken(token, type);
+    console.log(decoded);
+  });
 });
 
 // /console로 열린 소켓
