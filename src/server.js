@@ -73,13 +73,13 @@ app.get("/", (req, res) => {
 
 //test code
 const dummmy_data = {
-  location: [36.611, 126.979],
+  location: [37.6102882, 126.9321198],
   delayed: 330,
   speed: 0,
   stationName: "test",
 };
 const dummmy_data1 = {
-  location: [36.111, 126.111],
+  location: [37.6102882, 126.9321198],
   delayed: 300,
   speed: 10,
   stationName: "test number 2",
@@ -88,7 +88,7 @@ function test() {
   var state = true;
   const test_room = "1";
   var d = {
-    location: [36.611, 126.998],
+    location: [37.6102882, 126.9321198],
     delayed: 330,
     speed: 0,
     stationName: "test",
@@ -100,12 +100,12 @@ function test() {
     busitionMate.to(test_room).emit("data", d);
     busitionTest.to(test_room).emit("data", d);
     time += 1;
-    d.location[1] += 0.001;
+    d.location[1] += 0.0001;
     if (!state) {
       clearInterval(send_data);
     }
     if (time % 50 == 0) {
-      d.location[1] =  126.998;
+      d.location[1] =  126.9321198;
     }
   }, 1000);
 }
