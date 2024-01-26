@@ -100,7 +100,7 @@ function test() {
     busitionMate.to(test_room).emit("data", d);
     busitionTest.to(test_room).emit("data", d);
     time += 1;
-    d.location[1] += 0.0001;
+    d.location[1] += 0.001;
     if (!state) {
       clearInterval(send_data);
     }
