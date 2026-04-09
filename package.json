@@ -10,7 +10,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "AGPL-3.0-only",
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.335.0",
     "@socket.io/admin-ui": "^0.5.1",

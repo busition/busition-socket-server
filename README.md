@@ -127,3 +127,11 @@ Example `data` payload:
 
 - CORS is currently configured to allow all origins.
 - No automated tests are configured in this repository.
+
+## License
+
+This project is licensed under the GNU Affero General Public License v3.0 only (`AGPL-3.0-only`).
+
+If you run a modified version of this server over a network, you must make the corresponding source code of that modified version available to the users of that service, as required by the license.
+
+See `LICENSE` for the full text.
